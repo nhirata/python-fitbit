@@ -5,6 +5,7 @@ import sys
 import threading
 import traceback
 import webbrowser
+import ConfigParser
 
 from base64 import b64encode
 from fitbit.api import FitbitOauth2Client
@@ -69,11 +70,11 @@ class OAuth2Server:
 
 if __name__ == '__main__':
 
-    if not (len(sys.argv) == 3):
-        print("Arguments: client_id and client_secret")
-        sys.exit(1)
-
-    server = OAuth2Server(*sys.argv[1:])
+    parser = ConfigParser.SafeConfigParser()
+    parser.read('config.ini')
+    CI_id = parser.get('Login Parameters', 'CLIENT_ID')
+    CI_client_secret = parser.get('Login Parameters', 'CLIENT_SECRET')
+    server = OAuth2Server(CI_id, CI_client_secret)
     server.browser_authorize()
 
     print('FULL RESULTS = %s' % server.oauth.token)
