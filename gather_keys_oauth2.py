@@ -6,6 +6,7 @@ import threading
 import traceback
 import webbrowser
 import ConfigParser
+import json
 
 from base64 import b64encode
 from fitbit.api import FitbitOauth2Client
@@ -80,3 +81,9 @@ if __name__ == '__main__':
     print('FULL RESULTS = %s' % server.oauth.token)
     print('ACCESS_TOKEN = %s' % server.oauth.token['access_token'])
     print('REFRESH_TOKEN = %s' % server.oauth.token['refresh_token'])
+
+    f=open('token.json','w')
+    data = {} 
+    data['ACCESS_TOKEN'] = server.oauth.token['access_token']
+    data['REFRESH_TOKEN'] = server.oauth.token['refresh_token']
+    json_data = json.dump(data, f)

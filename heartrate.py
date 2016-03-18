@@ -9,10 +9,11 @@ parser.read('config.ini')
  
 CI_id              = parser.get('Login Parameters', 'CLIENT_ID')
 CI_client_secret   = parser.get('Login Parameters', 'CLIENT_SECRET')
-CI_access_token    = parser.get('Login Parameters', 'ACCESS_TOKEN')
-CI_refresh_token   = parser.get('Login Parameters', 'REFRESH_TOKEN')
+
+with open ('token.json') as data_file:
+   data = json.load(data_file)
  
-authd_client = fitbit.Fitbit(CI_id, CI_client_secret, oauth2=True, access_token=CI_access_token, refresh_token=CI_refresh_token)
+authd_client = fitbit.Fitbit(CI_id, CI_client_secret, oauth2=True, access_token=data["ACCESS_TOKEN"], refresh_token=data["REFRESH_TOKEN"])
  
 intradayS = authd_client.intraday_time_series('activities/steps', base_date    = 'today', detail_level = '1min', start_time   = None, end_time     = None)
  
