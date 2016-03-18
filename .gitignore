@@ -1,3 +1,5 @@
+*.json
+*.ini
 *.pyc
 *.DS_Store
 .coverage
